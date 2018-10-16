@@ -130,9 +130,6 @@ trait DateableTrait
     public function setDeletedAt(?DateTimeInterface $datetime = null): self
     {
         if ($datetime >= $this->createdAt) {
-            if (method_exists($this, 'setStatus')) {
-                $this->setStatus(Status::STATUS_DELETE);
-            }
             $this->deletedAt = $datetime;
             return $this;
         } else {

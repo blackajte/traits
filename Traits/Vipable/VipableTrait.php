@@ -18,22 +18,6 @@ use OutOfRangeException;
 
 trait VipableTrait
 {
-    CONST VIP_NO = 0;
-    CONST VIP_1 = 1;
-    CONST VIP_2 = 2;
-    CONST VIP_3 = 3;
-
-    public static function getAvailableVipType() : ?array
-    {
-        $return = [
-            'VIP_NO' => self::VIP_NO,
-            'VIP_1'  => self::VIP_1,
-            'VIP_2'  => self::VIP_2,
-            'VIP_3'  => self::VIP_3
-        ];
-        return $return;
-    }
-
     /**
      * @ORM\Column(type="integer")
      */
@@ -56,12 +40,8 @@ trait VipableTrait
      */
     public function setVipType(?int $vipType = 0): self
     {
-        if (in_array($vipType, $this::getAvailableVipType())) {
-            $this->vipType = $vipType;
-            return $this;
-        } else {
-            throw new InvalidArgumentException("VipType not available!");
-        }
+        $this->vipType = $vipType;
+        return $this;
     }
 
     /**

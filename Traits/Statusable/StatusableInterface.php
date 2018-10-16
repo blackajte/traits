@@ -10,14 +10,7 @@
 namespace Blackajte\TraitsBundle\Traits\Statusable;
 
 interface StatusableInterface
-{
-    /**
-     * get listing Status
-     *
-     * @return array
-     */
-    public static function getAvailableStatus();
-    
+{    
     /**
      * Get Status
      *

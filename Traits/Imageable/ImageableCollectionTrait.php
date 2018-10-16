@@ -45,7 +45,7 @@ trait ImageableCollectionTrait
     /**
      * {@inheritDoc} 
      */
-    public function getImages($type='string'): self
+    public function getImages($type='string')
     {
         if ($type == "collection") return $this->getImagesCollections();
         if (is_string($this->images)) return $this->images;
@@ -64,7 +64,7 @@ trait ImageableCollectionTrait
     /**
      * {@inheritDoc} 
      */
-    public function getImagesString(): self
+    public function getImagesString()
     {
         if ($this->images instanceof ArrayCollection) {
             $this->imagesCollections = $this->images;

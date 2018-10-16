@@ -7,12 +7,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Traits;
+namespace Blackajte\TraitsBundle\Tests;
 
-use \TraitsBundle\Identifiable\IdentifiableInterface;
-use \TraitsBundle\Groupable\LocalizedGroupableInterface;
-use \TraitsBundle\Mediaable\MediaableInterface;
-use \TraitsBundle\OpenGraphable\OpenGraphableInterface;
+use Blackajte\TraitsBundle\Traits\Identifiable\IdentifiableInterface;
+use Blackajte\TraitsBundle\Traits\Groupable\LocalizedGroupableInterface;
+use Blackajte\TraitsBundle\Traits\Mediaable\MediaableInterface;
+use Blackajte\TraitsBundle\Traits\OpenGraphable\OpenGraphableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class TestModelLocalized implements IdentifiableInterface,
@@ -20,10 +20,10 @@ class TestModelLocalized implements IdentifiableInterface,
     OpenGraphableInterface,
     MediaableInterface
 {
-    use \TraitsBundle\Identifiable\IdentifiableTrait;
-    use \TraitsBundle\Groupable\LocalizedGroupableTrait;
-    use \TraitsBundle\Mediaable\MediaableTrait;
-    use \TraitsBundle\OpenGraphable\OpenGraphableTrait;
+    use \Blackajte\TraitsBundle\Traits\Identifiable\IdentifiableTrait;
+    use \Blackajte\TraitsBundle\Traits\Groupable\LocalizedGroupableTrait;
+    use \Blackajte\TraitsBundle\Traits\Mediaable\MediaableTrait;
+    use \Blackajte\TraitsBundle\Traits\OpenGraphable\OpenGraphableTrait;
     
     /**
      * @return void

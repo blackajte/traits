@@ -12,14 +12,7 @@ namespace Blackajte\TraitsBundle\Traits\Vipable;
 use DateTimeInterface;
 
 interface VipableInterface
-{
-    /**
-     * get listing VipType
-     *
-     * @return array
-     */
-    public static function getAvailableVipType();
-    
+{    
     /**
      * Get vipType
      *
