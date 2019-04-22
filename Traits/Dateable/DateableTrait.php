@@ -14,21 +14,24 @@ use OutOfRangeException;
 use Blackajte\TraitsBundle\Traits\Statusable\StatusableTrait as Status;
 use DateTimeInterface;
 use DateTime;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 trait DateableTrait
 {
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
     
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
   
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $deletedAt;
 

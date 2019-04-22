@@ -22,6 +22,7 @@ use Blackajte\TraitsBundle\Traits\Dateable\ConnectableInterface;
 use Blackajte\TraitsBundle\Traits\Dateable\DateableInterface;
 use Blackajte\TraitsBundle\Traits\Dateable\NextAvailableAtInterface;
 use Blackajte\TraitsBundle\Traits\Dateable\OnlineableInterface;
+use Blackajte\TraitsBundle\Traits\Dateable\LoginableInterface;
 use Blackajte\TraitsBundle\Traits\Dateable\StartEndableInterface;
 use Blackajte\TraitsBundle\Traits\Draftable\DraftableInterface;
 use Blackajte\TraitsBundle\Traits\Groupable\GroupableInterface;
@@ -82,6 +83,7 @@ class TestModel implements
     DateableInterface,
     NextAvailableAtInterface,
     OnlineableInterface,
+    LoginableInterface,
     StartEndableInterface,
     DraftableInterface,
     GroupableInterface,
@@ -140,6 +142,7 @@ class TestModel implements
     use \Blackajte\TraitsBundle\Traits\Dateable\DateableTrait;
     use \Blackajte\TraitsBundle\Traits\Dateable\NextAvailableAtTrait;
     use \Blackajte\TraitsBundle\Traits\Dateable\OnlineableTrait;
+    use \Blackajte\TraitsBundle\Traits\Dateable\LoginableTrait;
     use \Blackajte\TraitsBundle\Traits\Dateable\StartEndableTrait;
     use \Blackajte\TraitsBundle\Traits\Draftable\DraftableTrait;
     use \Blackajte\TraitsBundle\Traits\Groupable\GroupableTrait;

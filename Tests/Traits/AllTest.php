@@ -193,6 +193,16 @@ class AllTest extends PHPUnit_Framework_TestCase
         $model->setDeletedAt($DeletedAt);
     }
 
+    public function testDateableTraitLastLoginAt()
+    {
+        $LastLoginAt = new DateTime('NOW');
+        $model = new Model();
+
+        $model->setLastLoginAt($LastLogin);
+
+        $this->assertEquals($LastLogin, $model->getLastLogin());
+    }
+
     public function testDraftableTrait()
     {
         $draft = rand(0, 1);

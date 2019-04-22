@@ -2,7 +2,6 @@
     "name": "blackajte/traits-bundle",
     "type": "symfony-bundle",
     "description": "V3 common bundle",
-    "license": "proprietary",
     "license": "MIT",
     "authors": [
         {

@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait ValueableTrait
 {
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=1000)
      */
     protected $value;
     
