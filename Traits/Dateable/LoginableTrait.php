@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * This file is part of the Blackajte\TraitsBundle\Traits\ package.
  *
  * (c) Arsenyk

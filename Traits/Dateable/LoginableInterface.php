@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * This file is part of the Blackajte\TraitsBundle\Traits\ package.
  *
  * (c) Arsenyk
@@ -24,6 +24,7 @@ interface LoginableInterface
      * Set LastLoginAt
      *
      * @param DateTimeInterface $datetime
+     * 
      * @return self
      */
     public function setLastLoginAt(?DateTimeInterface $datetime = null);

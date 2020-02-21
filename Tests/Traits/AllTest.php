@@ -198,9 +198,9 @@ class AllTest extends PHPUnit_Framework_TestCase
         $LastLoginAt = new DateTime('NOW');
         $model = new Model();
 
-        $model->setLastLoginAt($LastLogin);
+        $model->setLastLoginAt($LastLoginAt);
 
-        $this->assertEquals($LastLogin, $model->getLastLogin());
+        $this->assertEquals($LastLoginAt, $model->getLastLoginAt());
     }
 
     public function testDraftableTrait()
