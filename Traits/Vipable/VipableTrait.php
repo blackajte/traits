@@ -52,9 +52,8 @@ trait VipableTrait
         if ($datetime == null || $datetime >= new DateTime('now')) {
             $this->vipEndAt = $datetime;
             return $this;
-        } else {
-            throw new OutOfRangeException("date vipEndAt not good!");
         }
+        throw new OutOfRangeException("date vipEndAt not good!");
     }
 
     public function removeVipEndAt(): self
@@ -81,8 +80,7 @@ trait VipableTrait
                 return false;
             }
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }

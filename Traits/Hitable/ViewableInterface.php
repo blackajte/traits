@@ -21,8 +21,8 @@ interface ViewableInterface
     /**
      * Set View
      *
-     * @param int $View
+     * @param int $view
      * @return self
      */
-    public function setView(?int $View);
+    public function setView(?int $view);
 }

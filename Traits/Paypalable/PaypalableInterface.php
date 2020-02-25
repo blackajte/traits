@@ -23,10 +23,10 @@ interface PaypalableInterface
     /**
      * Set Txn Id
      *
-     * @param string $txn_id
+     * @param string $txnId
      * @return self
      */
-    public function setTxnId(?string $txn_id);
+    public function setTxnId(?string $txnId);
 
     /**
      * Get Txn Type
@@ -38,10 +38,10 @@ interface PaypalableInterface
     /**
      * Set Txn Type
      *
-     * @param string $txn_type
+     * @param string $txnType
      * @return self
      */
-    public function setTxnType(?string $txn_type);
+    public function setTxnType(?string $txnType);
 
     /**
      * Get Payment Date

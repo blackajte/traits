@@ -22,7 +22,7 @@ interface StatusableInterface
      * Set Status
      *
      * @param int $status
-     * @return this
+     * @return self
      */
     public function setStatus(?int $status);
 }

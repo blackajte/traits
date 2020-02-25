@@ -14,7 +14,7 @@ use DateTimeInterface;
 interface LoginableInterface
 {
     /**
-     * get LastLoginAt
+     * Get LastLoginAt
      *
      * @return DateTimeInterface
      */
@@ -23,7 +23,7 @@ interface LoginableInterface
     /**
      * Set LastLoginAt
      *
-     * @param DateTimeInterface $datetime
+     * @param DateTimeInterface $datetime date time set to last login
      * 
      * @return self
      */

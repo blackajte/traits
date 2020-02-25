@@ -12,6 +12,7 @@ namespace Blackajte\TraitsBundle\Traits\Groupable;
 use Doctrine\ORM\Mapping as ORM;
 use Blackajte\TraitsBundle\Traits\Groupable\LocaleInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Blackajte\TraitsBundle\Traits\Groupable\LocalizedGroupableInterface;
 
 trait LocalizeableTrait
 {
@@ -19,7 +20,7 @@ trait LocalizeableTrait
      * get localize
      *
      * @param LocaleInterface $locale
-     * @return localizedGroups
+     * @return LocalizedGroupableInterface|null
      */
     public function localize(LocaleInterface $locale)
     {

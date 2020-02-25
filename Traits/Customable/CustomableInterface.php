@@ -21,8 +21,8 @@ interface CustomableInterface
     /**
      * Set Custom
      *
-     * @param string $name
+     * @param string $custom
      * @return self
      */
-    public function setCustom(?string $name);
+    public function setCustom(?string $custom);
 }

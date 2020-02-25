@@ -33,4 +33,13 @@ interface UrlableInterface
      * @return string $url
      */    
     public static function urlable(string $path);
+    
+    /**
+     * Supprime les acces d'une chaine de caractere
+     *
+     * @param string $str
+     * @param string $encoding
+     * @return string $url
+     */    
+    public static function supprAccents($str, $encoding='utf-8'): string;
 }

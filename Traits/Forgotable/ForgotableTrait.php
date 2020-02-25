@@ -38,10 +38,9 @@ trait ForgotableTrait
      */
     public function setForgot(string $forgot = null): self
     {
+        $this->forgot = $forgot;
         if ($forgot === 0) {
             $this->forgot = null;
-        } else {
-            $this->forgot = $forgot;
         }
         return $this;
     }

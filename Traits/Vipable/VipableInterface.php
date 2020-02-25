@@ -24,7 +24,7 @@ interface VipableInterface
      * Set vipType
      *
      * @param int $vipType
-     * @return this
+     * @return self
      */
     public function setVipType(?int $vipType = 0);
 
@@ -32,7 +32,7 @@ interface VipableInterface
      * Set vipEndAt
      *
      * @param DateTimeInterface $datetime
-     * @return this
+     * @return self
      */
     public function setVipEndAt(?DateTimeInterface $datetime = null);
 

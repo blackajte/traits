@@ -13,7 +13,7 @@ Bundle comprenant tous les traits basiques dont nous pourrions avoir besoin
         }
     ],
     ............
-        "blackajte/traits-bundle": "^1.0"
+        "blackajte/traits-bundle": "^1.*"
 ```
 
 

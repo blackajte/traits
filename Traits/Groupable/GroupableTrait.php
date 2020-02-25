@@ -23,19 +23,19 @@ trait GroupableTrait
     /**
      * {@inheritDoc}
      */
-    public function localizedGroupAdd(LocalizedGroupableInterface $LocalizedGroup): self
+    public function localizedGroupAdd(LocalizedGroupableInterface $localizedGroup): self
     {
-        if ($this->localizedGroups->contains($LocalizedGroup) === false) {
-            $this->localizedGroups->add($LocalizedGroup);
+        if ($this->localizedGroups->contains($localizedGroup) === false) {
+            $this->localizedGroups->add($localizedGroup);
         }
         return $this;
     }
     /**
      * {@inheritDoc}
      */
-    public function localizedGroupTakeOff(LocalizedGroupableInterface $LocalizedGroup): self
+    public function localizedGroupTakeOff(LocalizedGroupableInterface $localizedGroup): self
     {
-        $this->localizedGroups->removeElement($LocalizedGroup);
+        $this->localizedGroups->removeElement($localizedGroup);
         return $this;
     }
 

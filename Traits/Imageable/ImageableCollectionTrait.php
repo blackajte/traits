@@ -54,7 +54,7 @@ trait ImageableCollectionTrait
         foreach ($collection as $item) {
             $images .= $item->getImage();
             if(next($collection)) {
-                $return .= ";";
+                $images .= ";";
             }
         }
         $this->images = $images;

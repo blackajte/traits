@@ -51,9 +51,9 @@ trait PaypalableTrait
     /**
      * {@inheritDoc}
      */
-    public function setTxnId(?string $txn_id): self
+    public function setTxnId(?string $txnId): self
     {
-        $this->txn_id = $txn_id;
+        $this->txn_id = $txnId;
         return $this;
     }
 
@@ -68,9 +68,9 @@ trait PaypalableTrait
     /**
      * {@inheritDoc}
      */
-    public function setTxnType(?string $txn_type): self
+    public function setTxnType(?string $txnType): self
     {
-        $this->txn_type = $txn_type;
+        $this->txn_type = $txnType;
         return $this;
     }
 

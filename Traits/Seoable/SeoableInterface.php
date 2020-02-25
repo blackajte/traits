@@ -29,7 +29,7 @@ interface SeoableInterface
     /**
      * Set decription_page
      *
-     * @param Text $description
+     * @param string $description
      * @return self
      */
     public function setDescriptionPage(?string $description);
@@ -37,7 +37,7 @@ interface SeoableInterface
     /**
      * Get decription_page
      *
-     * @return Text
+     * @return string $description
      */
     public function getDescriptionPage();
 

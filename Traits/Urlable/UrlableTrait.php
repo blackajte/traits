@@ -40,11 +40,11 @@ trait UrlableTrait
      */
     public static function urlable(string $path): string
     {
-        $path = self::suppr_accents($path);
+        $path = self::supprAccents($path);
         return preg_replace('/[^[:alnum:]-._~]/', '', $path);
     }
 
-    public static function suppr_accents($str, $encoding='utf-8'): string
+    public static function supprAccents($str, $encoding='utf-8'): string
     {
         // transformer les caractères accentués en entités HTML
         $str = htmlentities($str, ENT_NOQUOTES, $encoding);

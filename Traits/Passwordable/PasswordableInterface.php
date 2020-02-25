@@ -31,7 +31,15 @@ interface PasswordableInterface
      *
      * @param string $Password
      * @param array $options
-     * @return crypt password
+     * @return string $password_hash
      */
     public static function crypt(?string $password, array $options);
+    
+    /**
+     * generate Password lenght
+     *
+     * @param int $lenght
+     * @return string $password
+     */
+    public static function generate(int $lenght): ?string;
 }

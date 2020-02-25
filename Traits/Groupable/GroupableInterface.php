@@ -21,7 +21,7 @@ interface GroupableInterface
      * @param LocalizedGroupableInterface $LocalizedGroup
      * @return self
      */
-    public function localizedGroupAdd(LocalizedGroupableInterface $LocalizedGroup);
+    public function localizedGroupAdd(LocalizedGroupableInterface $localizedGroup);
 
     /**
      * Remove a LocalizedGroup to LocalizedGroups
@@ -29,7 +29,7 @@ interface GroupableInterface
      * @param LocalizedGroupableInterface $LocalizedGroup
      * @return self
      */
-    public function localizedGroupTakeOff(LocalizedGroupableInterface $LocalizedGroup);
+    public function localizedGroupTakeOff(LocalizedGroupableInterface $localizedGroup);
 
     /**
      * get LocalizedGroups

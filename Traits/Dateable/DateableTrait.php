@@ -106,9 +106,8 @@ trait DateableTrait
         if ($datetime >= $this->createdAt) {
             $this->updatedAt = $datetime;
             return $this;
-        } else {
-            throw new OutOfRangeException("date update not good!");
         }
+        throw new OutOfRangeException("date update not good!");
     }
 
     /**
@@ -135,9 +134,8 @@ trait DateableTrait
         if ($datetime >= $this->createdAt) {
             $this->deletedAt = $datetime;
             return $this;
-        } else {
-            throw new OutOfRangeException("date delete not good!");
         }
+        throw new OutOfRangeException("date delete not good!");
     }
 
     /**

@@ -35,6 +35,9 @@ trait PasswordableTrait
         return $this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public static function crypt(?string $password, array $options): ?string
     {
         return password_hash($password, PASSWORD_BCRYPT, $options);

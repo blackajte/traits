@@ -43,7 +43,7 @@ trait InfoDeviceableTrait
             $info = $provider->parse($this->getHttpUserAgent());
             if (!is_null($info)) {
                 if ($info->isBot()) {
-                    //TODO
+                    //@todo need to save info bot
                 } else {
                     $this->setBrowser($info->getBrowser()->toArray());
                     $this->setOs($info->getOperatingSystem()->toArray());

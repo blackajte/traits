@@ -50,9 +50,8 @@ trait StartEndableTrait
         if ($datetime >= $this->startAt) {
             $this->endAt = $datetime;
             return $this;
-        } else {
-            throw new OutOfRangeException("date end not good!");
         }
+        throw new OutOfRangeException("date end not good!");
     }
 
     /**

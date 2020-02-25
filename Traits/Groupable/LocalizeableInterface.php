@@ -10,6 +10,7 @@
 namespace Blackajte\TraitsBundle\Traits\Groupable;
 
 use Blackajte\TraitsBundle\Traits\Groupable\LocaleInterface;
+use Blackajte\TraitsBundle\Traits\Groupable\LocalizedGroupableInterface;
 
 interface LocalizeableInterface
 {
@@ -17,7 +18,7 @@ interface LocalizeableInterface
      * get localize
      *
      * @param LocaleInterface $locale
-     * @return localizedGroups
+     * @return LocalizedGroupableInterface|null
      */
     public function localize(LocaleInterface $locale);
 }

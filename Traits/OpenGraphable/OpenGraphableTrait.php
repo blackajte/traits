@@ -94,19 +94,19 @@ trait OpenGraphableTrait
     /**
      * {@inheritDoc}
      */
-    public function addOgMedia(ImageableInterface $Image): self
+    public function addOgMedia(ImageableInterface $image): self
     {
-        if ($this->getOgMediasCollection()->contains($Image) === false) {
-            $this->getOgMediasCollection()->add($Image);
+        if ($this->getOgMediasCollection()->contains($image) === false) {
+            $this->getOgMediasCollection()->add($image);
         }
         return $this;
     }
     /**
      * {@inheritDoc}
      */
-    public function removeOgMedias(ImageableInterface $Image): self
+    public function removeOgMedias(ImageableInterface $image): self
     {
-        $this->getOgMediasCollection()->removeElement($Image);
+        $this->getOgMediasCollection()->removeElement($image);
         return $this;
     }
 
@@ -125,15 +125,15 @@ trait OpenGraphableTrait
     /**
      * {@inheritDoc}
      */
-    public function setOgMedias(?string $Images): self
+    public function setOgMedias(?string $images): self
     {
-        $this->ogMedias = $Images;
+        $this->ogMedias = $images;
         return $this;
     }
 
-    protected function setOgMediasCollection(ArrayCollection $Images): self
+    protected function setOgMediasCollection(ArrayCollection $images): self
     {
-        $this->ogMediasCollection = $Images;
+        $this->ogMediasCollection = $images;
         return $this;
     }
 
@@ -146,6 +146,7 @@ trait OpenGraphableTrait
     {
         $listing = explode(';', $this->ogMedias);
         foreach ($listing as $item) {
+            //@todo check model image
             $Image = new Image();
             $Image->setImage($item);
             $this->getOgMediasCollection()->add($Image);
