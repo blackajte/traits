@@ -11,6 +11,7 @@ namespace Blackajte\TraitsBundle\Traits\OpenGraphable;
 
 use Doctrine\ORM\Mapping as ORM;
 use Blackajte\TraitsBundle\Traits\Imageable\ImageableInterface;
+use Blackajte\TraitsBundle\Traits\Imageable\DefaultImage;
 use Doctrine\Common\Collections\ArrayCollection;
 
 trait OpenGraphableTrait
@@ -117,9 +118,8 @@ trait OpenGraphableTrait
     {
         if ($type == 'string') {
             return $this->ogMedias;
-        } else {
-            return $this->getOgMediasCollection();
         }
+        return $this->getOgMediasCollection();
     }
 
     /**
@@ -147,9 +147,9 @@ trait OpenGraphableTrait
         $listing = explode(';', $this->ogMedias);
         foreach ($listing as $item) {
             //@todo check model image
-            $Image = new Image();
-            $Image->setImage($item);
-            $this->getOgMediasCollection()->add($Image);
+            $image = new DefaultImage();
+            $image->setImage($item);
+            $this->getOgMediasCollection()->add($image);
         }
         return $this;
     }
@@ -157,11 +157,10 @@ trait OpenGraphableTrait
     protected function transformCollectionToString(): self
     {
         foreach ($this->getOgMediasCollection() as $item) {
-            if ($this->ogMedias == '') {
-                $this->ogMedias .= $item->getImage();
-            } else {
-                $this->ogMedias .= ";".$item->getImage();
+            if ($this->ogMedias != '') {
+                $this->ogMedias .= ";";
             }
+            $this->ogMedias .= $item->getImage();
         }
         return $this;
     }

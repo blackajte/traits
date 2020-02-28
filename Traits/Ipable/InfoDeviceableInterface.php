@@ -37,45 +37,45 @@ interface InfoDeviceableInterface
     /**
      * Get Browser
      *
-     * @return array
+     * @return string
      */
     public function getBrowser();
 
     /**
      * Set Browser
      *
-     * @param array $browser
+     * @param string $browser
      * @return self
      */
-    public function setBrowser(array $browser);
+    public function setBrowser(string $browser);
 
     /**
      * Get Os
      *
-     * @return array
+     * @return string
      */
     public function getOs();
 
     /**
      * Set Os
      *
-     * @param array $os
+     * @param string $os
      * @return self
      */
-    public function setOs(array $os);
+    public function setOs(string $os);
 
     /**
      * Get Device
      *
-     * @return array
+     * @return string
      */
     public function getDevice();
 
     /**
      * Set Device
      *
-     * @param array $device
+     * @param string $device
      * @return self
      */
-    public function setDevice(array $device);
+    public function setDevice(string $device);
 }

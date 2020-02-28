@@ -43,6 +43,9 @@ trait PasswordableTrait
         return password_hash($password, PASSWORD_BCRYPT, $options);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public static function generate(int $lenght): ?string
     {
         $caract = "abcdefghijklmnopqrstuvwyxz0123456789@!:;,§/?*µ$=+";

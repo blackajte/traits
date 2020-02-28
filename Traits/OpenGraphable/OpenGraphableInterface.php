@@ -47,7 +47,7 @@ interface OpenGraphableInterface
     /**
      * Set og_escription
      *
-     * @param Text $description
+     * @param string $description
      * @return self
      */
     public function setOgDescription(?string $description);
@@ -55,7 +55,7 @@ interface OpenGraphableInterface
     /**
      * Get og_description
      *
-     * @return Text
+     * @return string
      */
     public function getOgDescription();
 
@@ -87,7 +87,7 @@ interface OpenGraphableInterface
      * Set og_medias
      *
      * @param string $Images
-     * @return this
+     * @return self
      */
     public function setOgMedias(?string $images);
 }

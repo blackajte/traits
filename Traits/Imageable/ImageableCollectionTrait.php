@@ -17,9 +17,12 @@ use Blackajte\TraitsBundle\Traits\Imageable\DefaultImage;
 trait ImageableCollectionTrait
 {
     /**
-     * @var ArrayCollection
+     * @var string
      */
     protected $images = null;
+    /**
+     * @var ArrayCollection
+     */
     protected $imagesCollections = null;
 
     /**
@@ -69,9 +72,10 @@ trait ImageableCollectionTrait
         if ($this->images instanceof ArrayCollection) {
             $this->imagesCollections = $this->images;
             $return = "";
-            foreach ($this->images as $item) {
+            $collection = $this->getImagesCollections();
+            foreach ($collection as $item) {
                 $return .= $item->getImage();
-                if(next($this->images)) {
+                if(next($collection)) {
                     $return .= ";";
                 }
             }
@@ -80,31 +84,35 @@ trait ImageableCollectionTrait
         return $this->images;
     }
 
+    protected function transformImagesCollection($images)
+    {
+        $this->imagesCollections = $images;
+        $items = "";
+        foreach ($this->imagesCollections as $item) {
+            if ($items != "") {
+                $items .= ";";
+            }
+            $items .= $item->getImage();
+        }
+        $this->images = $items;
+        return $this;
+    }
+
     /**
      * {@inheritDoc}
      */
     public function setImages($images): self
     {
         if ($images instanceof ArrayCollection) {
-            $this->imagesCollections = $images;
-            $items = "";
-            foreach ($this->imagesCollections as $item) {
-                if ($items == "") {
-                    $items .= $item->getImage();
-                } else {
-                    $items .= ";".$item->getImage();
-                }
-            }
-            $this->images = $items;
-        } else {
-            $this->images = $images;
-            $this->imagesCollections = new ArrayCollection();
-            if (is_string($images)) {
-                $listing = explode(";", $images);
-                foreach ($listing as $item) {
-                    $image = new DefaultImage($item);
-                    $this->imagesAdd($image);
-                }
+            return $this->transformImagesCollection($images);
+        }
+        $this->images = $images;
+        $this->imagesCollections = new ArrayCollection();
+        if (is_string($images)) {
+            $listing = explode(";", $images);
+            foreach ($listing as $item) {
+                $image = new DefaultImage($item);
+                $this->imagesAdd($image);
             }
         }
         return $this;
@@ -118,11 +126,10 @@ trait ImageableCollectionTrait
         $this->imagesCollections = $images;
         $items = "";
         foreach ($this->imagesCollections as $item) {
-            if ($items == "") {
-                $items .= $item->getImage();
-            } else {
-                $items .= ";".$item->getImage();
+            if ($items != "") {
+                $items .= ";";
             }
+            $items .= $item->getImage();
         }
         $this->images = $items;
         return $this;

@@ -117,90 +117,90 @@ class AllTest extends PHPUnit_Framework_TestCase
 
     public function testDateableTraitCreatedAt()
     {
-        $CreatedAt = new DateTime('NOW');
+        $createdAt = new DateTime('NOW');
         $model = new Model();
 
-        $model->setCreatedAt($CreatedAt);
+        $model->setCreatedAt($createdAt);
 
-        $this->assertEquals($CreatedAt, $model->getCreatedAt());
+        $this->assertEquals($createdAt, $model->getCreatedAt());
     }
 
     public function testDateableTraitUpdatedAt()
     {
-        $UpdatedAt = new DateTime('NOW');
+        $updatedAt = new DateTime('NOW');
         $model = new Model();
 
-        $model->setUpdatedAt($UpdatedAt);
+        $model->setUpdatedAt($updatedAt);
 
-        $this->assertEquals($UpdatedAt, $model->getUpdatedAt());
+        $this->assertEquals($updatedAt, $model->getUpdatedAt());
 
-        $UpdatedAt = new DateTime('NOW - 1day');
+        $updatedAt = new DateTime('NOW - 1day');
 
-        $model->setUpdatedAt($UpdatedAt);
+        $model->setUpdatedAt($updatedAt);
 
         $this->assertEquals(true, $model->isUpdated());
 
-        $UpdatedAt = new DateTime('NOW + 1day');
+        $updatedAt = new DateTime('NOW + 1day');
 
-        $model->setUpdatedAt($UpdatedAt);
+        $model->setUpdatedAt($updatedAt);
 
         $this->assertEquals(false, $model->isUpdated());
     }
 
     public function testDateableTraitUpdatedAtException()
     {
-        $CreatedAt = new DateTime('NOW');
-        $UpdatedAt = new DateTime('NOW - 1day');
+        $createdAt = new DateTime('NOW');
+        $updatedAt = new DateTime('NOW - 1day');
         $model = new Model();
-        $model->setCreatedAt($CreatedAt);
+        $model->setCreatedAt($createdAt);
 
         $this->expectException(OutOfRangeException::class);
 
-        $model->setUpdatedAt($UpdatedAt);
+        $model->setUpdatedAt($updatedAt);
     }
 
     public function testDateableTraitDeletedAt()
     {
-        $DeletedAt = new DateTime('NOW');
+        $deletedAt = new DateTime('NOW');
         $model = new Model();
 
-        $model->setDeletedAt($DeletedAt);
+        $model->setDeletedAt($deletedAt);
 
-        $this->assertEquals($DeletedAt, $model->getDeletedAt());
+        $this->assertEquals($deletedAt, $model->getDeletedAt());
 
-        $DeletedAt = new DateTime('NOW - 1day');
+        $deletedAt = new DateTime('NOW - 1day');
 
-        $model->setDeletedAt($DeletedAt);
+        $model->setDeletedAt($deletedAt);
 
         $this->assertEquals(true, $model->isDeleted());
 
-        $DeletedAt = new DateTime('NOW + 1day');
+        $deletedAt = new DateTime('NOW + 1day');
 
-        $model->setDeletedAt($DeletedAt);
+        $model->setDeletedAt($deletedAt);
 
         $this->assertEquals(false, $model->isDeleted());
     }
 
     public function testDateableTraitDeletedAtException()
     {
-        $CreatedAt = new DateTime('NOW + 1day');
-        $DeletedAt = new DateTime('NOW');
+        $createdAt = new DateTime('NOW + 1day');
+        $deletedAt = new DateTime('NOW');
         $model = new Model();
-        $model->setCreatedAt($CreatedAt);
+        $model->setCreatedAt($createdAt);
 
         $this->expectException(OutOfRangeException::class);
 
-        $model->setDeletedAt($DeletedAt);
+        $model->setDeletedAt($deletedAt);
     }
 
     public function testDateableTraitLastLoginAt()
     {
-        $LastLoginAt = new DateTime('NOW');
+        $lastLoginAt = new DateTime('NOW');
         $model = new Model();
 
-        $model->setLastLoginAt($LastLoginAt);
+        $model->setLastLoginAt($lastLoginAt);
 
-        $this->assertEquals($LastLoginAt, $model->getLastLoginAt());
+        $this->assertEquals($lastLoginAt, $model->getLastLoginAt());
     }
 
     public function testDraftableTrait()
@@ -313,7 +313,7 @@ class AllTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($randstring, $model->getName());
 
-        $this->assertEquals(NameableTrait::slugify($randstring), $model->getSlug());
+        $this->assertEquals(Model::slugify($randstring), $model->getSlug());
 
         $model->setName("");
         $this->assertEquals("n-a", $model->getSlug());
@@ -389,15 +389,15 @@ class AllTest extends PHPUnit_Framework_TestCase
     public function testGroupableTraitAddRemove()
     {
         $model = new Model();
-        $Localized_model = new ModelLocalized();
+        $localizedModel = new ModelLocalized();
 
         $randstring = substr(md5(rand()), 0, 7);
-        $Localized_model->setLabel($randstring);
-        $model->localizedGroupAdd($Localized_model);
+        $localizedModel->setLabel($randstring);
+        $model->localizedGroupAdd($localizedModel);
 
-        $this->assertEquals($Localized_model, $model->getLocalizedGroups()->first());
+        $this->assertEquals($localizedModel, $model->getLocalizedGroups()->first());
 
-        $model->localizedGroupTakeOff($Localized_model);
+        $model->localizedGroupTakeOff($localizedModel);
         $this->assertEquals(0, $model->getLocalizedGroups()->count());
     }
 
@@ -405,34 +405,34 @@ class AllTest extends PHPUnit_Framework_TestCase
     {
         $model = new Model();
 
-        $Localized_model = new ModelLocalized();
+        $localizedModel = new ModelLocalized();
         $randstring = substr(md5(rand()), 0, 7);
-        $Localized_model->setLabel($randstring);
+        $localizedModel->setLabel($randstring);
 
-        $Localized_modelSecond = new ModelLocalized();
+        $localizedModelSecond = new ModelLocalized();
         $randstring = substr(md5(rand()), 0, 7);
-        $Localized_modelSecond->setLabel($randstring);
+        $localizedModelSecond->setLabel($randstring);
 
         $listLocalized = new ArrayCollection();
 
-        $listLocalized->add($Localized_model);
-        $listLocalized->add($Localized_modelSecond);
+        $listLocalized->add($localizedModel);
+        $listLocalized->add($localizedModelSecond);
 
         $model->setLocalizedGroups($listLocalized);
 
-        $this->assertEquals($Localized_model, $model->getLocalizedGroups()->first());
+        $this->assertEquals($localizedModel, $model->getLocalizedGroups()->first());
 
-        $model->localizedGroupTakeOff($Localized_model);
-        $this->assertEquals($Localized_modelSecond, $model->getLocalizedGroups()->first());
+        $model->localizedGroupTakeOff($localizedModel);
+        $this->assertEquals($localizedModelSecond, $model->getLocalizedGroups()->first());
     }
 
     public function testLocalizedGroupableTrait()
     {
-        $Localized_model = new ModelLocalized();
+        $localizedModel = new ModelLocalized();
         $randstring = substr(md5(rand()), 0, 7);
-        $Localized_model->setLabel($randstring);
+        $localizedModel->setLabel($randstring);
 
-        $this->assertEquals($randstring, $Localized_model->getLabel());
+        $this->assertEquals($randstring, $localizedModel->getLabel());
     }
     
     public function testInableTrait()
@@ -477,22 +477,22 @@ class AllTest extends PHPUnit_Framework_TestCase
 
     public function testAttributeAtTrait()
     {
-        $attribute_at = new DateTime('NOW');
+        $attributeAt = new DateTime('NOW');
         $model = new Model();
 
-        $model->setAttributeAt($attribute_at);
+        $model->setAttributeAt($attributeAt);
 
-        $this->assertEquals($attribute_at, $model->getAttributeAt());
+        $this->assertEquals($attributeAt, $model->getAttributeAt());
 
-        $attribute_at = new DateTime('NOW + 1day');
+        $attributeAt = new DateTime('NOW + 1day');
         $model = new Model();
-        $model->setAttributeAt($attribute_at);
+        $model->setAttributeAt($attributeAt);
 
         $this->assertEquals(false, $model->isAttribute());
 
-        $attribute_at = new DateTime('NOW - 1day');
+        $attributeAt = new DateTime('NOW - 1day');
         $model = new Model();
-        $model->setAttributeAt($attribute_at);
+        $model->setAttributeAt($attributeAt);
 
         $this->assertEquals(true, $model->isAttribute());
     }
@@ -519,93 +519,93 @@ class AllTest extends PHPUnit_Framework_TestCase
 
     public function testConnectableTrait()
     {
-        $connect_at = new DateTime('NOW');
+        $connectAt = new DateTime('NOW');
         $model = new Model();
 
-        $model->setConnectAt($connect_at);
+        $model->setConnectAt($connectAt);
 
-        $this->assertEquals($connect_at, $model->getConnectAt());
+        $this->assertEquals($connectAt, $model->getConnectAt());
         $this->assertEquals(true, $model->isConnected());
 
-        $connect_at->modify('+ 1day');
-        $model->setConnectAt($connect_at);
+        $connectAt->modify('+ 1day');
+        $model->setConnectAt($connectAt);
 
         $this->assertEquals(false, $model->isConnected());
 
-        $connect_at->modify('- 2day');
-        $model->setConnectAt($connect_at);
+        $connectAt->modify('- 2day');
+        $model->setConnectAt($connectAt);
 
         $this->assertEquals(false, $model->isConnected());
     }
 
     public function testNextAvailableAtTrait()
     {
-        $next_available_at = new DateTime('NOW');
+        $nextAvailableAt = new DateTime('NOW');
         $model = new Model();
 
-        $model->setNextAvailableAt($next_available_at);
+        $model->setNextAvailableAt($nextAvailableAt);
 
-        $this->assertEquals($next_available_at, $model->getNextAvailableAt());
+        $this->assertEquals($nextAvailableAt, $model->getNextAvailableAt());
 
-        $next_available_at->modify('+ 1day');
-        $model->setNextAvailableAt($next_available_at);
+        $nextAvailableAt->modify('+ 1day');
+        $model->setNextAvailableAt($nextAvailableAt);
 
         $this->assertEquals(false, $model->isAvailable());
 
-        $next_available_at->modify('- 2day');
-        $model->setNextAvailableAt($next_available_at);
+        $nextAvailableAt->modify('- 2day');
+        $model->setNextAvailableAt($nextAvailableAt);
 
         $this->assertEquals(true, $model->isAvailable());
     }
 
     public function testOnlineableTrait()
     {
-        $OnlineAt = new DateTime('NOW');
+        $onlineAt = new DateTime('NOW');
         $model = new Model();
 
-        $model->setOnlineAt($OnlineAt);
+        $model->setOnlineAt($onlineAt);
 
-        $this->assertEquals($OnlineAt, $model->getOnlineAt());
+        $this->assertEquals($onlineAt, $model->getOnlineAt());
 
-        $OnlineAt->modify('+ 1day');
-        $model->setOnlineAt($OnlineAt);
+        $onlineAt->modify('+ 1day');
+        $model->setOnlineAt($onlineAt);
 
         $this->assertEquals(false, $model->isOnline());
 
-        $OnlineAt->modify('- 2day');
-        $model->setOnlineAt($OnlineAt);
+        $onlineAt->modify('- 2day');
+        $model->setOnlineAt($onlineAt);
 
         $this->assertEquals(true, $model->isOnline());
     }
 
     public function testStartEndableTrait()
     {
-        $StartAt = new DateTime('NOW');
+        $startAt = new DateTime('NOW');
         $model = new Model();
 
-        $model->setStartAt($StartAt);
+        $model->setStartAt($startAt);
 
-        $this->assertEquals($StartAt, $model->getStartAt());
+        $this->assertEquals($startAt, $model->getStartAt());
 
-        $EndAt = new DateTime('NOW + 1day');
-        $model->setEndAt($EndAt);
+        $endAt = new DateTime('NOW + 1day');
+        $model->setEndAt($endAt);
 
-        $this->assertEquals($EndAt, $model->getEndAt());
+        $this->assertEquals($endAt, $model->getEndAt());
         $this->assertEquals(false, $model->isEnd());
 
 
-        $StartAt = new DateTime('NOW - 1day');
-        $EndAt = new DateTime('NOW');
-        $model->setStartAt($StartAt);
-        $model->setEndAt($EndAt);
+        $startAt = new DateTime('NOW - 1day');
+        $endAt = new DateTime('NOW');
+        $model->setStartAt($startAt);
+        $model->setEndAt($endAt);
 
         $this->assertEquals(true, $model->isEnd());
 
-        $StartAt = new DateTime('NOW');
-        $model->setStartAt($StartAt);
-        $EndAt = new DateTime('NOW - 1day');
+        $startAt = new DateTime('NOW');
+        $model->setStartAt($startAt);
+        $endAt = new DateTime('NOW - 1day');
         $this->expectException('\OutOfRangeException');
-        $model->setEndAt($EndAt);
+        $model->setEndAt($endAt);
     }
 
     public function testDateableTrait()
@@ -729,17 +729,17 @@ class AllTest extends PHPUnit_Framework_TestCase
     public function testContactableTrait()
     {
         $randstring = substr(md5(rand()), 0, 7);
-        $randstring_second = substr(md5(rand()), 0, 7);
-        $randstring_last = substr(md5(rand()), 0, 7);
+        $randstringSecond = substr(md5(rand()), 0, 7);
+        $randstringLast = substr(md5(rand()), 0, 7);
 
         $model = new Model();
         $model->setFirstName($randstring);
-        $model->setSecondFirstName($randstring_second);
-        $model->setLastName($randstring_last);
+        $model->setSecondFirstName($randstringSecond);
+        $model->setLastName($randstringLast);
         
         $this->assertEquals($randstring, $model->getFirstName());
-        $this->assertEquals($randstring_second, $model->getSecondFirstName());
-        $this->assertEquals($randstring_last, $model->getLastName());
+        $this->assertEquals($randstringSecond, $model->getSecondFirstName());
+        $this->assertEquals($randstringLast, $model->getLastName());
     }
 
     public function testPhoneableTrait()
@@ -886,11 +886,11 @@ class AllTest extends PHPUnit_Framework_TestCase
 
     public function testImageableCollectionTrait()
     {
-        $Collection = new ArrayCollection();
+        $collection = new ArrayCollection();
         $model = new Model();
         $model->setLabel('Collection');
         
-        $this->assertEquals($Collection, $model->getImages('collection'));
+        $this->assertEquals($collection, $model->getImages('collection'));
 
         $image = new Model();
         $image->setLabel('test');
@@ -898,11 +898,11 @@ class AllTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($image, $model->getImages('collection')->first());
 
         $model->imagesTakeOff($image);
-        $this->assertEquals($Collection, $model->getImages('collection'));
+        $this->assertEquals($collection, $model->getImages('collection'));
 
-        $Collection->add($image);
-        $model->setImages($Collection);
-        $this->assertEquals($Collection, $model->getImages('collection'));
+        $collection->add($image);
+        $model->setImages($collection);
+        $this->assertEquals($collection, $model->getImages('collection'));
     }
 
     public function testPasswordableTrait()
@@ -988,37 +988,37 @@ class AllTest extends PHPUnit_Framework_TestCase
 
     public function testPaypalTrait()
     {
-        $TxnId = substr(md5(rand()), 0, 7);
-        $TxnType = substr(md5(rand()), 0, 7);
-        $PaymentType = substr(md5(rand()), 0, 7);
-        $PaymentStatus = substr(md5(rand()), 0, 7);
+        $txnId = substr(md5(rand()), 0, 7);
+        $txnType = substr(md5(rand()), 0, 7);
+        $paymentType = substr(md5(rand()), 0, 7);
+        $paymentStatus = substr(md5(rand()), 0, 7);
         $model = new Model();
 
-        $model->setTxnId($TxnId);
-        $this->assertEquals($TxnId, $model->getTxnId());
+        $model->setTxnId($txnId);
+        $this->assertEquals($txnId, $model->getTxnId());
 
-        $model->setTxnType($TxnType);
-        $this->assertEquals($TxnType, $model->getTxnType());
+        $model->setTxnType($txnId);
+        $this->assertEquals($txnType, $model->getTxnType());
 
-        $model->setPaymentType($PaymentType);
-        $this->assertEquals($PaymentType, $model->getPaymentType());
+        $model->setPaymentType($paymentType);
+        $this->assertEquals($paymentType, $model->getPaymentType());
 
-        $model->setPaymentStatus($PaymentStatus);
-        $this->assertEquals($PaymentStatus, $model->getPaymentStatus());
+        $model->setPaymentStatus($paymentStatus);
+        $this->assertEquals($paymentStatus, $model->getPaymentStatus());
 
-        $payment_date = new DateTime('NOW');
+        $paymentDate = new DateTime('NOW');
 
-        $model->setPaymentDate($payment_date);
+        $model->setPaymentDate($paymentDate);
 
-        $this->assertEquals($payment_date, $model->getPaymentDate());
+        $this->assertEquals($paymentDate, $model->getPaymentDate());
 
-        $payment_date->modify('+ 1day');
-        $model->setPaymentDate($payment_date);
+        $paymentDate->modify('+ 1day');
+        $model->setPaymentDate($paymentDate);
 
         $this->assertEquals(false, $model->isPayed());
 
-        $payment_date->modify('- 2day');
-        $model->setPaymentDate($payment_date);
+        $paymentDate->modify('- 2day');
+        $model->setPaymentDate($paymentDate);
 
         $this->assertEquals(true, $model->isPayed());
     }

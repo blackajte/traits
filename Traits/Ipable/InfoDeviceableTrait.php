@@ -10,7 +10,7 @@
 namespace Blackajte\TraitsBundle\Traits\Ipable;
 
 use Doctrine\ORM\Mapping as ORM;
-use UserAgentParser\Provider\PiwikDeviceDetector;
+use DeviceDetector\DeviceDetector;
 use Exception;
 use UserAgentParser\Exception\NoResultFoundException;
 
@@ -20,16 +20,19 @@ trait InfoDeviceableTrait
      * @ORM\Column(type="string", length=255)
      */
     protected $httpUserAgent = null;
+
     /**
-     * array
+     * @var string
      */
     protected $browser;
+
     /**
-     * array
+     * @var string
      */
     protected $os;
+
     /**
-     * array
+     * @var string
      */
     protected $device;
     
@@ -39,22 +42,15 @@ trait InfoDeviceableTrait
     public function autoInfo(): self
     {
         try {
-            $provider = new PiwikDeviceDetector();
-            $info = $provider->parse($this->getHttpUserAgent());
-            if (!is_null($info)) {
-                if ($info->isBot()) {
+            $provider = new DeviceDetector($this->getHttpUserAgent());
+            $provider->parse();
+            if ($provider->isBot()) {
                     //@todo need to save info bot
-                } else {
-                    $this->setBrowser($info->getBrowser()->toArray());
-                    $this->setOs($info->getOperatingSystem()->toArray());
-                    $this->setDevice($info->getDevice()->toArray());
-                }
-            }
-            return $this;
-        } catch (NoResultFoundException $e) {
-            $this->setBrowser(array('not found'));
-            $this->setOs(array('not found'));
-            $this->setDevice(array('not found'));
+                return $this;
+            } 
+            $this->setBrowser($provider->getBrandName());
+            $this->setOs($provider->getOs());
+            $this->setDevice($provider->getDeviceName());
             return $this;
         } catch (Exception $e) {
             $this->setBrowser(array('not found'));
@@ -85,7 +81,7 @@ trait InfoDeviceableTrait
     /**
      * {@inheritDoc}
      */
-    public function getBrowser(): ?array
+    public function getBrowser(): ?string
     {
         return $this->browser;
     }
@@ -93,7 +89,7 @@ trait InfoDeviceableTrait
     /**
      * {@inheritDoc}
      */
-    public function setBrowser(array $browser): self
+    public function setBrowser(string $browser): self
     {
         $this->browser = $browser;
         return $this;
@@ -102,7 +98,7 @@ trait InfoDeviceableTrait
     /**
      * {@inheritDoc}
      */
-    public function getOs(): ?array
+    public function getOs(): ?string
     {
         return $this->os;
     }
@@ -110,7 +106,7 @@ trait InfoDeviceableTrait
     /**
      * {@inheritDoc}
      */
-    public function setOs(array $os): self
+    public function setOs(string $os): self
     {
         $this->os = $os;
         return $this;
@@ -119,7 +115,7 @@ trait InfoDeviceableTrait
     /**
      * {@inheritDoc}
      */
-    public function getDevice(): ?array
+    public function getDevice(): ?string
     {
         return $this->device;
     }
@@ -127,7 +123,7 @@ trait InfoDeviceableTrait
     /**
      * {@inheritDoc}
      */
-    public function setDevice(array $device): self
+    public function setDevice(string $device): self
     {
         $this->device = $device;
         return $this;
