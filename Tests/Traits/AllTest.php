@@ -997,7 +997,7 @@ class AllTest extends PHPUnit_Framework_TestCase
         $model->setTxnId($txnId);
         $this->assertEquals($txnId, $model->getTxnId());
 
-        $model->setTxnType($txnId);
+        $model->setTxnType($txnType);
         $this->assertEquals($txnType, $model->getTxnType());
 
         $model->setPaymentType($paymentType);
