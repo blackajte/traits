@@ -10,6 +10,7 @@
 namespace Blackajte\TraitsBundle\Traits\Ipable;
 
 use Doctrine\ORM\Mapping as ORM;
+use RangeException;
 
 trait IpableTrait
 {
@@ -31,6 +32,12 @@ trait IpableTrait
      */
     public function setIp(?string $ip): self
     {
+        $explode = explode('.', $ip);
+        foreach ($explode as $num) {
+            if ((int)$num > 255) {
+                throw new RangeException("Ip non valide");
+            }
+        }
         $this->ip = $ip;
         return $this;
     }

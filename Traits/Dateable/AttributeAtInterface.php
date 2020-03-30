@@ -33,5 +33,5 @@ interface AttributeAtInterface
      *
      * @return bool
      */
-    public function isAttribute();
+    public function isAttributeAt();
 }

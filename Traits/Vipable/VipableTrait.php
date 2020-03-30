@@ -56,9 +56,10 @@ trait VipableTrait
         throw new OutOfRangeException("date vipEndAt not good!");
     }
 
-    public function removeVipEndAt(): self
+    public function removeVip(): self
     {
         $this->vipEndAt = null;
+        $this->vipType = 0;
         return $this;
     }
 

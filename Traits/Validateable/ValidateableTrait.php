@@ -11,6 +11,7 @@ namespace Blackajte\TraitsBundle\Traits\Validateable;
 
 use Doctrine\ORM\Mapping as ORM;
 use Blackajte\TraitsBundle\Traits\Dateable\DateableTrait;
+use DateTime;
 use DateTimeInterface;
 
 trait ValidateableTrait
@@ -37,10 +38,10 @@ trait ValidateableTrait
      */
     public function setValidate(?string $validate): self
     {
-        if ($validate == 0) {
-            $this->validate = null;
-        } else {
+        $this->validate = null;
+        if (!empty($validate)) {
             $this->validate = $validate;
+            return $this->setValidateAt(new DateTime());
         }
         return $this;
     }
@@ -63,9 +64,12 @@ trait ValidateableTrait
     }
 
     public function isValidate(): ?bool
-    {        
-        if (!empty($this->validateAt) && $this->validateAt instanceof DateTimeInterface) {
-            return DateableTrait::isBefore($this->validateAt);
+    {
+        if (!empty($this->validate)) {
+            if (!empty($this->validateAt) && $this->validateAt instanceof DateTimeInterface) {
+                return DateableTrait::isBefore($this->validateAt);
+            }
+            return true;
         }
         return false;
     }

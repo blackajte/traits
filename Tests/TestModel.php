@@ -16,7 +16,7 @@ use Blackajte\TraitsBundle\Traits\Booleanable\CheckinableInterface;
 use Blackajte\TraitsBundle\Traits\Booleanable\ConfidentialableInterface;
 use Blackajte\TraitsBundle\Traits\Booleanable\NewsletterableInterface;
 use Blackajte\TraitsBundle\Traits\Booleanable\FollowableInterface;
-use Blackajte\TraitsBundle\Traits\Dateable\AttributeAtInterface;
+use Blackajte\TraitsBundle\Traits\Attributeable\AttributeableInterface;
 use Blackajte\TraitsBundle\Traits\Dateable\BirthdateableInterface;
 use Blackajte\TraitsBundle\Traits\Dateable\ConnectableInterface;
 use Blackajte\TraitsBundle\Traits\Dateable\DateableInterface;
@@ -56,6 +56,7 @@ use Blackajte\TraitsBundle\Traits\Pseudoable\PseudoableInterface;
 use Blackajte\TraitsBundle\Traits\Timeable\TimeableInterface;
 use Blackajte\TraitsBundle\Traits\Voteable\VoteableInterface;
 use Blackajte\TraitsBundle\Traits\Voteable\VoteBonusableInterface;
+use Blackajte\TraitsBundle\Traits\Voteable\VoteBonusPersoableInterface;
 use Blackajte\TraitsBundle\Traits\Positionable\PositionableInterface;
 use Blackajte\TraitsBundle\Traits\Pointable\PointableInterface;
 use Blackajte\TraitsBundle\Traits\Bodyable\BodyableInterface;
@@ -67,6 +68,12 @@ use Blackajte\TraitsBundle\Traits\Imageable\ImageableInterface;
 use Blackajte\TraitsBundle\Traits\Imageable\ImageableCollectionInterface;
 use Blackajte\TraitsBundle\Traits\Passwordable\PasswordableInterface;
 use Blackajte\TraitsBundle\Traits\Paypalable\PaypalableInterface;
+use Blackajte\TraitsBundle\Traits\Customable\CustomableInterface;
+use Blackajte\TraitsBundle\Traits\Forgotable\ForgotableInterface;
+use Blackajte\TraitsBundle\Traits\Vipable\VipableInterface;
+use Blackajte\TraitsBundle\Traits\Validateable\ValidateableInterface;
+use \Blackajte\TraitsBundle\Traits\Ipable\GeoIpableInterface;
+use \Blackajte\TraitsBundle\Traits\Ipable\InfoDeviceableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class TestModel implements
@@ -77,7 +84,7 @@ class TestModel implements
     ConfidentialableInterface,
     NewsletterableInterface,
     FollowableInterface,
-    AttributeAtInterface,
+    AttributeableInterface,
     BirthdateableInterface,
     ConnectableInterface,
     DateableInterface,
@@ -115,6 +122,7 @@ class TestModel implements
     TimeableInterface,
     VoteableInterface,
     VoteBonusableInterface,
+    VoteBonusPersoableInterface,
     PositionableInterface,
     BodyableInterface,
     DeviseableInterface,
@@ -127,7 +135,13 @@ class TestModel implements
     PaypalableInterface,
     LocalizeableInterface,
     ContentableInterface,
-    PointableInterface
+    PointableInterface,
+    CustomableInterface,
+    ForgotableInterface,
+    VipableInterface,
+    ValidateableInterface,
+    GeoIpableInterface,
+    InfoDeviceableInterface
 {
     use \Blackajte\TraitsBundle\Traits\Identifiable\IdentifiableTrait;
     use \Blackajte\TraitsBundle\Traits\Skuable\SKUableTrait;
@@ -136,7 +150,7 @@ class TestModel implements
     use \Blackajte\TraitsBundle\Traits\Booleanable\ConfidentialableTrait;
     use \Blackajte\TraitsBundle\Traits\Booleanable\NewsletterableTrait;
     use \Blackajte\TraitsBundle\Traits\Booleanable\FollowableTrait;
-    use \Blackajte\TraitsBundle\Traits\Dateable\AttributeAtTrait;
+    use \Blackajte\TraitsBundle\Traits\Attributeable\AttributeableTrait;
     use \Blackajte\TraitsBundle\Traits\Dateable\BirthdateableTrait;
     use \Blackajte\TraitsBundle\Traits\Dateable\ConnectableTrait;
     use \Blackajte\TraitsBundle\Traits\Dateable\DateableTrait;
@@ -175,6 +189,7 @@ class TestModel implements
     use \Blackajte\TraitsBundle\Traits\Timeable\TimeableTrait;
     use \Blackajte\TraitsBundle\Traits\Voteable\VoteableTrait;
     use \Blackajte\TraitsBundle\Traits\Voteable\VoteBonusableTrait;
+    use \Blackajte\TraitsBundle\Traits\Voteable\VoteBonusPersoableTrait;
     use \Blackajte\TraitsBundle\Traits\Positionable\PositionableTrait;
     use \Blackajte\TraitsBundle\Traits\Bodyable\BodyableTrait;
     use \Blackajte\TraitsBundle\Traits\Deviseable\DeviseableTrait;
@@ -187,6 +202,12 @@ class TestModel implements
     use \Blackajte\TraitsBundle\Traits\Passwordable\PasswordableTrait;
     use \Blackajte\TraitsBundle\Traits\Contentable\ContentableTrait;
     use \Blackajte\TraitsBundle\Traits\Pointable\PointableTrait;
+    use \Blackajte\TraitsBundle\Traits\Customable\CustomableTrait;
+    use \Blackajte\TraitsBundle\Traits\Forgotable\ForgotableTrait;
+    use \Blackajte\TraitsBundle\Traits\Vipable\VipableTrait;
+    use \Blackajte\TraitsBundle\Traits\Validateable\ValidateableTrait;
+    use \Blackajte\TraitsBundle\Traits\Ipable\GeoIpableTrait;
+    use \Blackajte\TraitsBundle\Traits\Ipable\InfoDeviceableTrait;
     
     /**
      * @return void

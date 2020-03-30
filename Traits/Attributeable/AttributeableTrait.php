@@ -28,7 +28,7 @@ trait AttributeableTrait
     /**
      * {@inheritDoc}
      */
-    public function getAttribute(): ?int
+    public function getAttribute(): ?bool
     {
         return $this->attribute;
     }
@@ -36,10 +36,10 @@ trait AttributeableTrait
     /**
      * {@inheritDoc}
      */
-    public function setAttribute(?int $attribute): self
+    public function setAttribute(?bool $attribute): self
     {
         $this->attribute = $attribute;
-        if ($this->attribute == 1) {
+        if ($this->attribute === true) {
             $this->setAttributeAt(new DateTime());
         }
         return $this;
@@ -50,7 +50,7 @@ trait AttributeableTrait
      */
     public function isAttribute(): bool
     {
-        if ($this->getAttribute() == 1) {
+        if ($this->getAttribute() == true) {
             return DateableTrait::isBefore($this->getAttributeAt());
         }
         return false;

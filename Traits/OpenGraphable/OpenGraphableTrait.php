@@ -105,7 +105,7 @@ trait OpenGraphableTrait
     /**
      * {@inheritDoc}
      */
-    public function removeOgMedias(ImageableInterface $image): self
+    public function removeOgMedia(ImageableInterface $image): self
     {
         $this->getOgMediasCollection()->removeElement($image);
         return $this;
@@ -114,9 +114,11 @@ trait OpenGraphableTrait
     /**
      * {@inheritDoc}
      */
-    public function getOgMedias(?string $type = 'string')
+    public function getOgMedias(?string $type = 'collection')
     {
         if ($type == 'string') {
+            $this->ogMedias = "";
+            $this->transformCollectionToString();
             return $this->ogMedias;
         }
         return $this->getOgMediasCollection();
@@ -125,10 +127,16 @@ trait OpenGraphableTrait
     /**
      * {@inheritDoc}
      */
-    public function setOgMedias(?string $images): self
+    public function setOgMedias($images): self
     {
+        $this->ogMediasCollection = new ArrayCollection();
+        $this->ogMedias = "";
+        if ($images instanceof ArrayCollection) {
+            $this->setOgMediasCollection($images);
+            return $this->transformCollectionToString();
+        }
         $this->ogMedias = $images;
-        return $this;
+        return $this->transformStringToCollection();
     }
 
     protected function setOgMediasCollection(ArrayCollection $images): self

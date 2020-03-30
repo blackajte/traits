@@ -11,14 +11,17 @@ namespace Blackajte\TraitsBundle\Tests\Traits;
 
 use Blackajte\TraitsBundle\Tests\TestModel as Model;
 use Blackajte\TraitsBundle\Tests\TestModelLocalized as ModelLocalized;
+use Blackajte\TraitsBundle\Tests\TestModelImage as ModelImage;
 use Blackajte\TraitsBundle\Tests\TestModelLocale as ModelLocale;
 use Blackajte\TraitsBundle\Traits\Statusable\StatusableTrait;
 use Blackajte\TraitsBundle\Traits\Nameable\NameableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use DateTime;
+use DateInterval;
 use PHPUnit\Framework\TestCase as PHPUnit_Framework_TestCase;
 use \InvalidArgumentException;
 use OutOfRangeException;
+use RangeException;
 use Exception;
 
 class AllTest extends PHPUnit_Framework_TestCase
@@ -26,24 +29,25 @@ class AllTest extends PHPUnit_Framework_TestCase
 
     public function testPointableTrait()
     {
-        $y = rand(0, 100);
+        $initPoint = rand(0, 100);
 
         $model = new Model();
-        $model->setPoint($y);
+        $model->setPoint($initPoint);
         
-        $this->assertEquals($y, $model->getPoint());
+        $this->assertEquals($initPoint, $model->getPoint());
 
         $randstring = substr(md5(rand()), 0, 7);
         $model->setPoint((int)$randstring);
         
         $this->assertEquals((int)$randstring, $model->getPoint());
 
-        $y = rand(0, 100);
+        $model->setPoint($initPoint);
+        $y = rand(1, 100);
         $model->addPoint($y);
         
-        $this->assertEquals((int)$randstring+$y, $model->getPoint());
+        $this->assertEquals((int)$initPoint+$y, $model->getPoint());
         
-        $model->removePoint((int)$randstring);
+        $model->removePoint((int)$initPoint);
         
         $this->assertEquals($y, $model->getPoint());
     }
@@ -113,6 +117,14 @@ class AllTest extends PHPUnit_Framework_TestCase
         $this->expectException(Exception::class);
         $model->setStatus($randstring);
 */
+    }
+
+    public function testDateableTraitConvertStringToDateTime()
+    {
+        $createdAt = "2020-01-03 10:20:17";
+        $dateTime = new DateTime($createdAt);
+
+        $this->assertEquals($dateTime, Model::convertStringToDatetime($createdAt));
     }
 
     public function testDateableTraitCreatedAt()
@@ -252,24 +264,33 @@ class AllTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($randstring, $model->getOgDescription());
     }
-/*
+
     public function testOpenGraphableTraitMedia()
     {
-        $randstring = substr(md5(rand()), 0, 7);
-        $modelMedia = new ModelLocalized();
-        $modelMedia->setPath($randstring);
-        $modelMediaSecond = new ModelLocalized();
-        $modelMediaSecond->setPath($randstring);
         $model = new ModelLocalized();
+        $modelMedia = new ModelImage("image1.jpg");
+        $modelMediaSecond = new ModelImage("image2.png");
+        $modelMediaThird = new ModelImage("image3.jpeg");
+
         $listMedia = new ArrayCollection();
 
         $listMedia->add($modelMedia);
         $listMedia->add($modelMediaSecond);
 
         $model->setOgMedias($listMedia);
+        
+        $this->assertEquals($modelMedia->getImage(), $model->getOgMedias()->first()->getImage());
+        $this->assertTrue($model->getOgMedias()->contains($modelMediaSecond));
 
-        $this->assertEquals($modelMedia, $model->getOgMedias()->first());
-        $this->assertEquals(true, $model->getOgMedias()->contains($modelMediaSecond));
+        $model->addOgMedia($modelMediaThird);
+        $this->assertEquals($modelMediaThird->getImage(), $model->getOgMedias()->last()->getImage());
+
+        $model->removeOgMedia($modelMediaSecond);
+        $this->assertEquals("image1.jpg;image3.jpeg", $model->getOgMedias('string'));
+
+        $stringImages = "image2.png;image1.jpg;image3.jpeg";
+        $model->setOgMedias($stringImages);
+        $this->assertEquals($stringImages, $model->getOgMedias('string'));
     }
 
 /*
@@ -384,6 +405,10 @@ class AllTest extends PHPUnit_Framework_TestCase
         $randstring = substr(md5(rand()), 0, 7);
         $model->setUrlPage($randstring);
         $this->assertEquals($randstring, $model->getUrlPage());
+
+        $string = "un nombre de mots ou de signes précis ou être";
+        $urlString = "unnombredemotsoudesignesprecisouetre";
+        $this->assertEquals($urlString, $model::urlable($string));
     }
 
     public function testGroupableTraitAddRemove()
@@ -494,7 +519,18 @@ class AllTest extends PHPUnit_Framework_TestCase
         $model = new Model();
         $model->setAttributeAt($attributeAt);
 
-        $this->assertEquals(true, $model->isAttribute());
+        $this->assertTrue($model->isAttributeAt());
+    }
+
+    public function testAttributeableTrait()
+    {
+        $y = true;
+        $model = new Model();
+
+        $model->setAttribute($y);
+
+        $this->assertTrue($model->getAttribute());
+        $this->assertTrue($model->isAttribute());
     }
 
     public function testBirthdateableTrait()
@@ -780,6 +816,16 @@ class AllTest extends PHPUnit_Framework_TestCase
 
         $model->voteBonusTakeOff(10);
         $this->assertEquals($y, $model->getVoteBonus());
+
+        $model->setVoteBonusPerso($y);
+        
+        $this->assertEquals($y, $model->getVoteBonusPerso());
+
+        $model->voteBonusPersoAdd(10);
+        $this->assertEquals((10+$y), $model->getVoteBonusPerso());
+
+        $model->voteBonusPersoTakeOff(10);
+        $this->assertEquals($y, $model->getVoteBonusPerso());
     }
 
     public function testPositionableTrait()
@@ -845,6 +891,10 @@ class AllTest extends PHPUnit_Framework_TestCase
         $model->setScalableAmount((float)$randstring);
         $this->assertEquals((float)$randstring, $model->getScalableAmount());
 
+        $model->setScalableAmount(0);
+        $this->assertEquals(0, $model->getScalableAmount());
+        $this->assertFalse($model->getScalable());
+
         
         $y = true;
         $model->setScalable($y);
@@ -854,6 +904,10 @@ class AllTest extends PHPUnit_Framework_TestCase
         $randstring = substr(md5(rand()), 0, 7);
         $model->setScalable($randstring);
         $this->assertEquals((bool)$randstring, $model->getScalable());
+
+        $y = '';
+        $model->setScalable($y);
+        $this->assertFalse($model->getScalable());
     }
 
     public function testJsonableTrait()
@@ -903,6 +957,25 @@ class AllTest extends PHPUnit_Framework_TestCase
         $collection->add($image);
         $model->setImages($collection);
         $this->assertEquals($collection, $model->getImages('collection'));
+
+        $images = "image1.jpg;image2.png;image3.jpeg";
+        $model->setImages($images);
+        $this->assertEquals($images, $model->getImagesString());
+        $this->assertEquals($images, $model->getImages('string'));
+
+        $collection = new ArrayCollection();
+        $image1 = new ModelImage("image1.jpg");
+        $image2 = new ModelImage("image2.png");
+        $image3 = new ModelImage("image3.jpeg");
+        $collection->add($image1);
+        $collection->add($image2);
+        $collection->add($image3);
+
+        $model->setImagesCollections($collection);
+        $this->assertEquals($images, $model->getImages('string'));
+
+        $model->setImages($collection);
+        $this->assertEquals($images, $model->getImages('string'));
     }
 
     public function testPasswordableTrait()
@@ -917,6 +990,9 @@ class AllTest extends PHPUnit_Framework_TestCase
         $randstring = substr(md5(rand()), 0, 7);
         $model->setPassword($randstring);
         $this->assertEquals($randstring, $model->getPassword());
+
+        $lenght = 10;
+        $this->assertEquals($lenght, strlen($model::generate($lenght)));
     }
 
     public function testPasswordableTraitCrypt()
@@ -1021,5 +1097,196 @@ class AllTest extends PHPUnit_Framework_TestCase
         $model->setPaymentDate($paymentDate);
 
         $this->assertEquals(true, $model->isPayed());
+    }
+
+    public function testCustomableTrait()
+    {
+        $randstring = substr(md5(rand()), 0, 7);
+
+        $model = new Model();
+        $model->setCustom($randstring);
+        
+        $this->assertEquals($randstring, $model->getCustom());
+    }
+
+    public function testForgotableTrait()
+    {
+        $forgotDate = new DateTime('NOW');
+
+        $model = new Model();
+        $model->setForgot();
+                
+        $this->assertNull($model->getForgot());
+        $this->assertNull($model->getForgotAt());
+        $this->assertFalse($model->isForgot());
+
+        $randstring = substr(md5(rand()), 0, 7);
+        $forgotDate = new DateTime('NOW');
+
+        $model = new Model();
+        $model->setForgot($randstring);
+                
+        $this->assertEquals($randstring, $model->getForgot());
+        $this->assertGreaterThan($forgotDate, $model->getForgotAt());
+        $this->assertTrue($model->isForgot());
+    }
+
+    public function testVipableTrait()
+    {
+        $model = new Model();
+        $model->setVipType();
+        
+        $this->assertEquals(0, $model->getVipType());
+        $this->assertFalse($model->isVipAvailable());
+
+        $y = rand(1, 100);
+        $model->setVipType($y);
+        
+        $this->assertEquals($y, $model->getVipType());
+        $this->assertTrue($model->isVipAvailable());
+
+        $now = new DateTime();
+        $now->add(new DateInterval('PT1H'));
+        $model->setVipEndAt($now);
+        
+        $this->assertEquals($now, $model->getVipEndAt());
+        $this->assertTrue($model->isVipAvailable());
+
+        $now->modify('+ 1day');
+        $model->setVipEndAt($now);
+        $this->assertTrue($model->isVipAvailable());
+
+        $model->removeVip();
+        $this->assertEquals(null, $model->getVipEndAt());
+        $this->assertEquals(0, $model->getVipType());
+        $this->assertFalse($model->isVipAvailable());
+
+        $y = rand(1, 100);
+        $now = new DateTime();
+        $now->modify("+1 second");
+        $model->setVipEndAt($now);
+        $model->setVipType($y);
+        sleep(2);
+        $this->assertEquals($now, $model->getVipEndAt());
+        $this->assertFalse($model->isVipAvailable());
+    }
+
+    public function testVipableTraitException()
+    {
+        $now = new DateTime('NOW');
+        $model = new Model();
+        $this->expectException(OutOfRangeException::class);
+
+        $model->setVipEndAt($now);
+    }
+
+    public function testValidateableTrait()
+    {
+        $model = new Model();
+        $model->setValidate('');
+        
+        $this->assertEquals('', $model->getValidate());
+        $this->assertFalse($model->isValidate());
+
+        $randstring = substr(md5(rand()), 0, 7);
+        $model->setValidate($randstring);
+        
+        $this->assertEquals($randstring, $model->getValidate());
+        $this->assertTrue($model->isValidate());
+
+        $now = new DateTime();
+        $now->add(new DateInterval('PT1H'));
+        $model->setValidateAt($now);
+        
+        $this->assertEquals($now, $model->getValidateAt());
+        $this->assertFalse($model->isValidate());
+
+        $now->modify('- 1day');
+        $model->setValidateAt($now);
+        $this->assertTrue($model->isValidate());
+
+        $model->setValidateAt();
+        $this->assertTrue($model->isValidate());
+    }
+
+    public function testIpableTrait()
+    {
+        $ip = "127.0.0.1";
+
+        $model = new Model();
+        $model->setIp($ip);
+        $this->assertEquals($ip, $model->getIp());
+    }
+
+    public function testIpableTraitException()
+    {
+        $ip = "127.0.195.268";
+        $model = new Model();
+        $this->expectException(RangeException::class);
+
+        $model->setIp($ip);
+    }
+
+    public function testGeoIpableTrait()
+    {
+        $ip = "195.154.178.85";
+
+        $model = new Model();
+        $model->newIp($ip);
+        $this->assertEquals("", $model->getCity());
+        $this->assertEquals("FR", $model->getCountry());
+        $this->assertEquals("EU", $model->getContinent());
+
+        $city = "Montpellier";
+        $country = "France";
+        $continent = "Europe";
+
+        $model->setCity($city);
+        $model->setCountry($country);
+        $model->setContinent($continent);
+        $this->assertEquals($city, $model->getCity());
+        $this->assertEquals($country, $model->getCountry());
+        $this->assertEquals($continent, $model->getContinent());
+    }
+
+    public function testInfoDeviceableTrait()
+    {
+        $httpUserAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36";
+
+        $model = new Model();
+        $model->setHttpUserAgent($httpUserAgent);
+        $this->assertEquals($httpUserAgent, $model->getHttpUserAgent());
+        $this->assertEquals("Chrome 75.0", $model->getBrowser());
+        $this->assertEquals("GNU/Linux", $model->getOs());
+        $this->assertEquals("desktop", $model->getDevice());
+
+        $browser = "Chrome";
+        $os = "Xubuntu";
+        $device = "Mobile";
+
+        $model->setBrowser($browser);
+        $model->setOs($os);
+        $model->setDevice($device);
+        $this->assertEquals($browser, $model->getBrowser());
+        $this->assertEquals($os, $model->getOs());
+        $this->assertEquals($device, $model->getDevice());
+    }
+
+    public function testInfoDeviceableTraitException()
+    {
+        $httpUserAgent = "tototot";
+
+        $model = new Model();
+        $model->setHttpUserAgent($httpUserAgent);
+        $this->assertEquals($httpUserAgent, $model->getHttpUserAgent());
+        $this->assertEquals("not found", $model->getBrowser());
+        $this->assertEquals("not found", $model->getOs());
+        $this->assertEquals("not found", $model->getDevice());
+    }
+
+    public function testDefaultImage()
+    {
+        $modelImage = new ModelImage();
+        $this->assertEquals("/img/design/default-img.gif", $modelImage->getImage());
     }
 }

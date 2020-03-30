@@ -40,7 +40,7 @@ trait AttributeAtTrait
     /**
      * {@inheritDoc}
      */
-    public function isAttribute() : bool
+    public function isAttributeAt() : bool
     {
         return DateableTrait::isBefore($this->attributeAt);
     }

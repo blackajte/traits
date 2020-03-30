@@ -17,17 +17,17 @@ interface AttributeableInterface extends AttributeAtInterface
     /**
      * Get validate
      *
-     * @return int
+     * @return boolean
      */
     public function getAttribute();
 
     /**
      * Set validate
      *
-     * @param int $validate
+     * @param boolean $validate
      * @return self
      */
-    public function setAttribute(?int $validate);
+    public function setAttribute(?bool $validate);
 
 
     /**

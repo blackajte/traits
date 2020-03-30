@@ -47,15 +47,15 @@ trait InfoDeviceableTrait
             if ($provider->isBot()) {
                     //@todo need to save info bot
                 return $this;
-            } 
-            $this->setBrowser($provider->getBrandName());
-            $this->setOs($provider->getOs());
+            }
+            $this->setBrowser($provider->getClient()['name']." ".$provider->getClient()['version']);
+            $this->setOs($provider->getOs()['name']);
             $this->setDevice($provider->getDeviceName());
             return $this;
         } catch (Exception $e) {
-            $this->setBrowser(array('not found'));
-            $this->setOs(array('not found'));
-            $this->setDevice(array('not found'));
+            $this->setBrowser('not found');
+            $this->setOs('not found');
+            $this->setDevice('not found');
             return $this;
         }
     }

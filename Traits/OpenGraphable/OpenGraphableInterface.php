@@ -73,7 +73,7 @@ interface OpenGraphableInterface
      * @param ImageableInterface $Image
      * @return self
      */
-    public function removeOgMedias(ImageableInterface $image);
+    public function removeOgMedia(ImageableInterface $image);
 
     /**
      * Get og_medias
@@ -81,7 +81,7 @@ interface OpenGraphableInterface
      * @param string $type
      * @return string/ArrayCollection
      */
-    public function getOgMedias(?string $type = 'string');
+    public function getOgMedias(?string $type = 'collection');
 
     /**
      * Set og_medias
@@ -89,5 +89,5 @@ interface OpenGraphableInterface
      * @param string $Images
      * @return self
      */
-    public function setOgMedias(?string $images);
+    public function setOgMedias($images);
 }

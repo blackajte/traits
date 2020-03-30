@@ -11,6 +11,7 @@ namespace Blackajte\TraitsBundle\Traits\Forgotable;
 
 use Doctrine\ORM\Mapping as ORM;
 use Blackajte\TraitsBundle\Traits\Dateable\DateableTrait;
+use DateTime;
 use DateTimeInterface;
 
 trait ForgotableTrait
@@ -38,9 +39,10 @@ trait ForgotableTrait
      */
     public function setForgot(string $forgot = null): self
     {
-        $this->forgot = $forgot;
-        if ($forgot === 0) {
-            $this->forgot = null;
+        $this->forgot = null;
+        if ($forgot !== null) {
+            $this->forgot = $forgot;
+            return $this->setForgotAt(new DateTime());
         }
         return $this;
     }
