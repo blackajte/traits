@@ -14,19 +14,16 @@ use OutOfRangeException;
 use Blackajte\TraitsBundle\Traits\Statusable\StatusableTrait as Status;
 use DateTimeInterface;
 use DateTime;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 trait DateableTrait
 {
     /**
      * @ORM\Column(type="datetime")
-     * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
     
     /**
      * @ORM\Column(type="datetime")
-     * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
   
@@ -152,5 +149,18 @@ trait DateableTrait
     public function isDeleted(): bool
     {
         return DateableTrait::isBefore($this->deletedAt);
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDateOnPrePersist()
+    {
+        $dateTime = new DateTime();
+        if (empty($this->getId())) {
+            $this->setCreatedAt($dateTime);
+        }
+        $this->setUpdatedAt($dateTime);
+        return $this;
     }
 }

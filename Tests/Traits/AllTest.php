@@ -119,6 +119,22 @@ class AllTest extends PHPUnit_Framework_TestCase
 */
     }
 
+    public function testPrePersist()
+    {
+        $model = new Model();
+        $randstring = substr(md5(rand()), 0, 7);
+        $model->setName($randstring);
+        $model->convertNameToSlug();
+        $this->assertEquals(NameableTrait::slugify($randstring), $model->getSlug());
+
+        $dateTime1 = new DateTime();
+        $model->setDateOnPrePersist();
+        $dateTime2 = new DateTime();
+
+        $this->assertLessThanOrEqual($dateTime2, $model->getCreatedAt());
+        $this->assertGreaterThanOrEqual($dateTime1, $model->getUpdatedAt());
+    }
+
     public function testDateableTraitConvertStringToDateTime()
     {
         $createdAt = "2020-01-03 10:20:17";
@@ -333,10 +349,12 @@ class AllTest extends PHPUnit_Framework_TestCase
         $model->setName($randstring);
 
         $this->assertEquals($randstring, $model->getName());
+        $model->convertNameToSlug();
 
         $this->assertEquals(Model::slugify($randstring), $model->getSlug());
 
         $model->setName("");
+        $model->convertNameToSlug();
         $this->assertEquals("n-a", $model->getSlug());
     }
 

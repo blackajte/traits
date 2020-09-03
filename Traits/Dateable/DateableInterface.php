@@ -94,4 +94,11 @@ interface DateableInterface
      * @return DateTimeInterface
      */
     public static function convertStringToDatetime($string);
+    
+    /**
+     * Fonction pour mettre a jours les dates necessaires lors d'un persist
+     * 
+     * @return self
+     */
+    public function setDateOnPrePersist();
 }

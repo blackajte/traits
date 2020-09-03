@@ -48,4 +48,11 @@ interface NameableInterface
      * @return string
      */
     public static function slugify(?string $text);
+    
+    /**
+     * Convert Name set to valid slug
+     * 
+     * @return self
+     */
+    public function convertNameToSlug();
 }

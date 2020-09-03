@@ -10,7 +10,6 @@
 namespace Blackajte\TraitsBundle\Traits\Nameable;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 trait NameableTrait
 {
@@ -20,8 +19,7 @@ trait NameableTrait
     protected $name = null;
     
     /**
-     * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(length=255, unique=true)
+     * @ORM\Column(type="string")
      */
     protected $slug = null;
     
@@ -66,7 +64,6 @@ trait NameableTrait
     public function setName(?string $name): self
     {
         $this->name = $name;
-        $this->setSlug(NameableTrait::slugify($name));
         return $this;
     }
 
@@ -84,5 +81,14 @@ trait NameableTrait
     public function getSlug(): ?string
     {
         return $this->slug;
+    }
+    
+    /**
+     * @ORM\PrePersist
+     */
+    public function convertNameToSlug()
+    {
+        $this->setSlug(NameableTrait::slugify($this->getName()));
+        return $this;
     }
 }
