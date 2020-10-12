@@ -9,11 +9,11 @@ Bundle comprenant tous les traits basiques dont nous pourrions avoir besoin
     "repositories": [
         {
             "type": "git",
-            "url": "blackajte@bitbucket.org:blackajte/traits-bundle.git"
+            "url": "https://github.com/blackajte/traits.git"
         }
     ],
     ............
-        "blackajte/traits-bundle": "^1.*"
+        "blackajte/traits": "^1.*"
 ```
 
 
